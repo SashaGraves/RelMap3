@@ -8,13 +8,11 @@ import {
   useColorScheme,
   Button,
   View,
+  Settings,
 } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
 
 const CharacterList = ({navigation}: any) => (
   <View style={styles.view}>
@@ -50,26 +48,93 @@ const Gallery = () => (
   </View>
 );
 
+const Map = () => (
+  <View style={styles.view}>
+    <Text>Here will be Map</Text>
+  </View>
+);
+
+const AppSettings = ({navigation}: any) => (
+  <View style={styles.view}>
+    <Text>Here will be App settings</Text>
+    <Button
+      onPress={() => navigation.push('UserSettings')}
+      title="Go to user settings"
+    />
+  </View>
+);
+
+const UserStetings = ({navigation}: any) => (
+  <View style={styles.view}>
+    <Text>Here will be User settings</Text>
+    <Button
+      onPress={() => navigation.goBack('AppSettings')}
+      title="Go to app settings"
+    />
+  </View>
+);
+
+const CharacterNavigator = createNativeStackNavigator();
+
+const CharacterStack = () => (
+  <CharacterNavigator.Navigator initialRouteName="Character List">
+    <CharacterNavigator.Screen
+      name="Character List"
+      component={CharacterList}
+      options={{title: 'Characters'}}
+    />
+    <CharacterNavigator.Screen
+      name="Dossier"
+      component={Dossier}
+      options={{title: "Ann's dossier"}}
+    />
+    <CharacterNavigator.Screen
+      name="Avatar gallery"
+      component={Gallery}
+      options={{title: 'Choose avatar'}}
+    />
+  </CharacterNavigator.Navigator>
+);
+
+const MapNavigator = createNativeStackNavigator();
+
+const MapStack = () => (
+  <MapNavigator.Navigator>
+    <MapNavigator.Screen
+      name="Map"
+      component={Map}
+      options={{title: 'Relation map'}}
+    />
+  </MapNavigator.Navigator>
+);
+
+const SettingsNavigator = createNativeStackNavigator();
+
+const SettingsStack = () => (
+  <SettingsNavigator.Navigator>
+    <SettingsNavigator.Screen
+      name="AppSettings"
+      component={AppSettings}
+      options={{title: 'Settings for app'}}
+    />
+    <SettingsNavigator.Screen
+      name="UserSettings"
+      component={UserStetings}
+      options={{title: 'Settings for user'}}
+    />
+  </SettingsNavigator.Navigator>
+);
+
+const Tab = createBottomTabNavigator();
+
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Character List">
-        <Stack.Screen
-          name="Character List"
-          component={CharacterList}
-          options={{title: 'Characters'}}
-        />
-        <Stack.Screen
-          name="Dossier"
-          component={Dossier}
-          options={{title: "Ann's dossier"}}
-        />
-        <Stack.Screen
-          name="Avatar gallery"
-          component={Gallery}
-          options={{title: 'Choose avatar'}}
-        />
-      </Stack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="Characters" component={CharacterStack} />
+        <Tab.Screen name="Map" component={MapStack} />
+        <Tab.Screen name="Settings" component={SettingsStack} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
