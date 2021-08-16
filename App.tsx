@@ -130,7 +130,7 @@ const Tab = createBottomTabNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={{headerShown: false}}>
         <Tab.Screen name="Characters" component={CharacterStack} />
         <Tab.Screen name="Map" component={MapStack} />
         <Tab.Screen name="Settings" component={SettingsStack} />
