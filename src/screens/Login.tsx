@@ -12,10 +12,11 @@ import {
 } from 'react-native';
 
 export const Login = () => {
+  const login = () => {};
+
   return (
     <View style={styles.view}>
-      <Text>Login</Text>
-      <Text>Password</Text>
+      <Button title="Login" onPress={login} />
     </View>
   );
 };

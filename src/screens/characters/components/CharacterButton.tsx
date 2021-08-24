@@ -1,14 +1,22 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 
-export const TagButton = ({navigation, tag, style}: any) => {
-  const onPress = () => navigation.push('TagInfo', {name: tag.name || tag});
+export const CharacterButton = ({navigation, person, style}: any) => {
+  const onPress = () => {
+    navigation.push('Dossier', {id: person.id});
+  };
 
   return (
     <View style={(styles.container, style)}>
       <TouchableHighlight onPress={onPress}>
         <View style={styles.button}>
-          <Text>{tag.name || tag}</Text>
+          <Text>{person.name}</Text>
         </View>
       </TouchableHighlight>
     </View>

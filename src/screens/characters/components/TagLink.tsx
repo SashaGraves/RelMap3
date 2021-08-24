@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 
-export const TagButton = ({navigation, tag, style}: any) => {
-  const onPress = () => navigation.push('TagInfo', {name: tag.name || tag});
+export const TagLink = ({navigation, tag}: any) => {
+  const onPress = () =>
+    navigation.navigate('Tag', {screen: 'TagInfo', params: {title: tag}});
 
   return (
-    <View style={(styles.container, style)}>
+    <View style={styles.container}>
       <TouchableHighlight onPress={onPress}>
-        <View style={styles.button}>
-          <Text>{tag.name || tag}</Text>
+        <View style={styles.link}>
+          <Text style={styles.text}>{tag}</Text>
         </View>
       </TouchableHighlight>
     </View>
@@ -21,9 +22,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 10,
   },
-  button: {
+  link: {
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#aaaaaa',
     padding: 10,
+  },
+  text: {
+    color: '#666666',
   },
 });

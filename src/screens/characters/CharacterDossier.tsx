@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,31 +11,53 @@ import {
   Settings,
 } from 'react-native';
 import {characters} from 'data/characters';
-import {IPerson} from 'types/Person';
+import {IPerson, IRelation} from 'types/Person';
+import {ITag} from 'types/Tag';
 import {Relationship} from './components/Relationship';
-import {TagButton} from 'screens/tags/components/TagButton';
+import {TagLink} from './components/TagLink';
 
 export const Dossier = ({navigation, route}: any) => {
   const {id: personId} = route.params;
   const [person, setPerson] = useState<IPerson>({} as IPerson);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [tagList, setTagList] = useState<any[]>();
+  const [previousTagList, setPreviousTagList] = useState<any[]>();
+  const [relationshipList, setRelationshipList] = useState<any[]>();
 
   useEffect(() => {
     setIsLoading(true);
     const index = characters.findIndex(item => item.id === personId);
+    let foundPerson;
     if (index > -1) {
-      setPerson(characters[index]);
+      foundPerson = characters[index];
+      setPerson(foundPerson);
+
+      const tags = foundPerson.tags.map(mapTags);
+      setTagList(tags);
+      const previousTags = foundPerson.previousTags?.map(mapTags);
+      setPreviousTagList(previousTags);
+      const relations = foundPerson.relationships.map(mapRelation);
+      setRelationshipList(relations);
     }
     setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personId]);
 
-  React.useLayoutEffect(() => {
+  const mapTags = (tag: string, index: number) => (
+    <TagLink key={index} navigation={navigation} tag={tag} />
+  );
+
+  const mapRelation = (rel: IRelation, index: number) => (
+    <Relationship key={index} navigation={navigation} relationship={rel} />
+  );
+
+  useLayoutEffect(() => {
     navigation.setOptions({
       title: person.name,
     });
   }, [navigation, person]);
 
-  console.log(personId);
+  console.log(tagList);
 
   return (
     <View style={styles.view}>
@@ -44,27 +66,11 @@ export const Dossier = ({navigation, route}: any) => {
       ) : (
         <ScrollView style={styles.scrollView}>
           <Text>{person.description}</Text>
-          <View>
-            {person.tags.map((tag, index) => (
-              <TagButton key={index} navigation={navigation} tag={tag} />
-            ))}
-          </View>
+          <View>{tagList}</View>
           {person.previousTags && person.previousTags.length > 0 && (
-            <View>
-              {person.previousTags.map((tag, index) => (
-                <TagButton key={index} navigation={navigation} tag={tag} />
-              ))}
-            </View>
+            <View>{previousTagList}</View>
           )}
-          <View>
-            {person.relationships.map((rel, index) => (
-              <Relationship
-                key={index}
-                navigation={navigation}
-                relationship={rel}
-              />
-            ))}
-          </View>
+          <View>{relationshipList}</View>
           <Button
             onPress={() => navigation.navigate('Avatar gallery')}
             title="Go to avatar gallery"

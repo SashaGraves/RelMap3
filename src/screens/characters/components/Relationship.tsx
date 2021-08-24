@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {CharacterButton} from './CustomButton';
+import {CharacterButton} from './CharacterButton';
 
 export const Relationship = ({relationship, navigation}: any) => {
   return (

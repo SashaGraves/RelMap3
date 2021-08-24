@@ -10,7 +10,7 @@ import {
   View,
   Settings,
 } from 'react-native';
-import {CharacterButton} from './components/CustomButton';
+import {CharacterButton} from './components/CharacterButton';
 import {characters} from 'data/characters';
 
 export const CharacterList = ({navigation}: any) => (

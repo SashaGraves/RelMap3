@@ -17,6 +17,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Login} from 'screens/Login';
 import {SplashScreen} from 'screens/SplashScreen';
 import {CharacterList} from 'screens/characters/CharacterList';
+import {TagList} from 'screens/tags/TagList';
+import {TagInfo} from 'screens/tags/TagInfo';
 import {Dossier} from 'screens/characters/CharacterDossier';
 
 const Gallery = () => (
@@ -63,7 +65,7 @@ const CharacterStack = () => (
     <CharacterNavigator.Screen
       name="Dossier"
       component={Dossier}
-      options={{title: "Ann's dossier"}}
+      options={{title: 'Person'}}
     />
     <CharacterNavigator.Screen
       name="Avatar gallery"
@@ -71,6 +73,23 @@ const CharacterStack = () => (
       options={{title: 'Choose avatar'}}
     />
   </CharacterNavigator.Navigator>
+);
+
+const TagNavigator = createNativeStackNavigator();
+
+const TagStack = () => (
+  <TagNavigator.Navigator initialRouteName="TagList">
+    <TagNavigator.Screen
+      name="TagList"
+      component={TagList}
+      options={{title: 'Tags'}}
+    />
+    <TagNavigator.Screen
+      name="TagInfo"
+      component={TagInfo}
+      options={{title: 'Tag'}}
+    />
+  </TagNavigator.Navigator>
 );
 
 const MapNavigator = createNativeStackNavigator();
@@ -122,26 +141,8 @@ const App = () => {
         </LoginNavigator.Navigator>
       ) : (
         <Tab.Navigator screenOptions={{headerShown: false}}>
-          <Tab.Screen
-            name="Characters"
-            component={CharacterStack}
-            options={
-              {
-                // tabBarIcon: FiBookOpen,
-                // tabBarIcon: ({focused}) => {
-                //   if (focused) {
-                //     return (
-                //       <FiBookOpen width="100%" height="70%" color="#3FB57F" />
-                //     );
-                //   } else {
-                //     return (
-                //       <FiBookOpen color="#593FB5" width="100%" height="70%" />
-                //     );
-                //   }
-                // },
-              }
-            }
-          />
+          <Tab.Screen name="Characters" component={CharacterStack} />
+          <Tab.Screen name="Tag" component={TagStack} />
           <Tab.Screen name="Map" component={MapStack} />
           <Tab.Screen name="Settings" component={SettingsStack} />
         </Tab.Navigator>
