@@ -10,9 +10,14 @@ import {
   View,
   Settings,
 } from 'react-native';
+import {useAppDispatch} from 'store/store';
+import {loginAction} from 'store/actions';
 
 export const Login = () => {
-  const login = () => {};
+  const dispatch = useAppDispatch();
+  const login = () => {
+    dispatch(loginAction());
+  };
 
   return (
     <View style={styles.view}>

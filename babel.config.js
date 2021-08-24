@@ -12,6 +12,7 @@ module.exports = {
           common: './src/common',
           data: './src/data',
           types: './src/types',
+          store: './src/store',
         },
       },
     ],
