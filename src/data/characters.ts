@@ -8,8 +8,8 @@ export const characters: IPerson[] = [
     tags: ['halfling'],
     previousTags: ['Shire'],
     relationships: [
-      {to: 'Sam', rel: 'Friendship'},
-      {to: 'Tom Bombadil', rel: 'fellowship'},
+      {to: {name: 'Sam'}, rel: 'Friendship'},
+      {to: {name: 'Tom Bombadil', id: '124'}, rel: 'fellowship'},
     ],
     description: '',
   },
@@ -19,8 +19,8 @@ export const characters: IPerson[] = [
     avatar: '',
     tags: ['mage'],
     relationships: [
-      {to: 'company', rel: 'fellowship'},
-      {to: 'Goldberry', rel: 'love'},
+      {to: {name: 'party'}, rel: 'fellowship'},
+      {to: {name: 'Goldberry'}, rel: 'love'},
     ],
     description: 'Merry, always sings',
   },
@@ -30,8 +30,8 @@ export const characters: IPerson[] = [
     avatar: '',
     tags: ['human'],
     relationships: [
-      {to: 'company', rel: 'helps'},
-      {from: 'Gandalf', rel: 'trust'},
+      {to: {name: 'party'}, rel: 'helps'},
+      {from: {name: 'Gandalf'}, rel: 'trust'},
     ],
     description: 'Gray-haired, walked everywhere',
   },

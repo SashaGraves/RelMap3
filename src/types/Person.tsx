@@ -9,7 +9,12 @@ export interface IPerson {
 }
 
 interface IRelationShip {
-  to?: string;
-  from?: string;
+  to?: IPersonInfo;
+  from?: IPersonInfo;
   rel: string;
+}
+
+interface IPersonInfo {
+  name: string;
+  id?: string;
 }

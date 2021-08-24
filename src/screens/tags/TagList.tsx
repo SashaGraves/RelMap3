@@ -10,16 +10,16 @@ import {
   View,
   Settings,
 } from 'react-native';
-import {CharacterButton} from './components/CustomButton';
-import {characters} from 'data/characters';
+import {TagButton} from './components/TagButton';
+import {tags} from 'data/tags';
 
-export const CharacterList = ({navigation}: any) => (
+export const TagList = ({navigation}: any) => (
   <View style={styles.view}>
     <ScrollView style={styles.scrollView}>
-      {characters.map(person => (
-        <CharacterButton
-          key={person.id}
-          person={person}
+      {tags.map((tag, index) => (
+        <TagButton
+          key={index}
+          tag={tag}
           navigation={navigation}
           style={styles.listItem}
         />
