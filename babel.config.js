@@ -10,6 +10,8 @@ module.exports = {
           images: './src/images',
           constants: './src/constants',
           common: './src/common',
+          data: './src/data',
+          types: './src/types',
         },
       },
     ],
