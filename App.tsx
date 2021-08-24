@@ -14,33 +14,10 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-const CharacterList = ({navigation}: any) => (
-  <View style={styles.view}>
-    <Text>Here will be character list</Text>
-    <Button
-      onPress={() => navigation.navigate('Dossier')}
-      title="Go to character dossier"
-    />
-  </View>
-);
-
-const Dossier = ({navigation}: any) => (
-  <View style={styles.view}>
-    <Text>Here will be character dossier</Text>
-    <Button
-      onPress={() => navigation.push('Dossier')}
-      title="Go to another character dossier"
-    />
-    <Button
-      onPress={() => navigation.navigate('Avatar gallery')}
-      title="Go to avatar gallery"
-    />
-    <Button
-      onPress={() => navigation.popToTop('Character List')}
-      title="Home (navigate)"
-    />
-  </View>
-);
+import {Login} from 'screens/Login';
+import {SplashScreen} from 'screens/SplashScreen';
+import {CharacterList} from 'screens/characters/CharacterList';
+import {Dossier} from 'screens/characters/CharacterDossier';
 
 const Gallery = () => (
   <View style={styles.view}>
@@ -127,14 +104,48 @@ const SettingsStack = () => (
 
 const Tab = createBottomTabNavigator();
 
+const LoginNavigator = createNativeStackNavigator();
+
 const App = () => {
+  const state = {
+    isLoading: false,
+    userToken: true,
+  };
+  if (state.isLoading) {
+    return <SplashScreen />;
+  }
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{headerShown: false}}>
-        <Tab.Screen name="Characters" component={CharacterStack} />
-        <Tab.Screen name="Map" component={MapStack} />
-        <Tab.Screen name="Settings" component={SettingsStack} />
-      </Tab.Navigator>
+      {!state.userToken ? (
+        <LoginNavigator.Navigator>
+          <LoginNavigator.Screen name="Login" component={Login} />
+        </LoginNavigator.Navigator>
+      ) : (
+        <Tab.Navigator screenOptions={{headerShown: false}}>
+          <Tab.Screen
+            name="Characters"
+            component={CharacterStack}
+            options={
+              {
+                // tabBarIcon: FiBookOpen,
+                // tabBarIcon: ({focused}) => {
+                //   if (focused) {
+                //     return (
+                //       <FiBookOpen width="100%" height="70%" color="#3FB57F" />
+                //     );
+                //   } else {
+                //     return (
+                //       <FiBookOpen color="#593FB5" width="100%" height="70%" />
+                //     );
+                //   }
+                // },
+              }
+            }
+          />
+          <Tab.Screen name="Map" component={MapStack} />
+          <Tab.Screen name="Settings" component={SettingsStack} />
+        </Tab.Navigator>
+      )}
     </NavigationContainer>
   );
 };
