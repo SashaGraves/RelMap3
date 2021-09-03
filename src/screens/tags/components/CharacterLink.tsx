@@ -2,24 +2,39 @@ import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableHighlight,
   View,
   TouchableOpacity,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {PersonsWithTag} from 'types/Tag';
+import {Color} from 'common/colors';
 
-export const CharacterLink = ({navigation, person, style}: any) => {
+interface CharactersLinkProps {
+  person: PersonsWithTag;
+  style?: StyleProp<ViewStyle>;
+  textColor: string;
+}
+
+export const CharacterLink = ({
+  person,
+  style,
+  textColor,
+}: CharactersLinkProps) => {
+  const navigation = useNavigation();
+
   const onPress = () => {
-    navigation.push('Dossier', {id: person.id});
+    navigation.navigate('Characters', {
+      screen: 'Dossier',
+      params: {personId: person.id},
+    });
   };
 
   return (
-    <View style={(styles.container, style)}>
-      <TouchableHighlight onPress={onPress}>
-        <View style={styles.button}>
-          <Text>{person.name}</Text>
-        </View>
-      </TouchableHighlight>
-    </View>
+    <TouchableOpacity onPress={onPress} style={(styles.container, style)}>
+      <Text style={[styles.button, {color: textColor}]}>{person.name}</Text>
+    </TouchableOpacity>
   );
 };
 
@@ -27,11 +42,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 10,
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 10,
+    fontSize: 18,
+    textAlign: 'center',
   },
 });

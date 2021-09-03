@@ -1,10 +1,10 @@
 export interface ITag {
   name: string;
-  personIdArray: PersonTags[];
-  previousIdArray: PersonTags[];
+  personIdArray: PersonsWithTag[];
+  previousIdArray: PersonsWithTag[];
 }
 
-export interface PersonTags {
+export interface PersonsWithTag {
   id: string;
   name: string;
 }

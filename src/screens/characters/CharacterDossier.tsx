@@ -77,7 +77,7 @@ export const Dossier = ({navigation, route}: DossierNavigationProps) => {
         <ScrollView style={styles.scrollView}>
           {!!person.description && (
             <View style={[styles.descriptionContainer, styles.gap]}>
-              <Text>Description:</Text>
+              <Text style={styles.descriptionText}>Description:</Text>
               <Text>{person.description}</Text>
             </View>
           )}
@@ -115,10 +115,14 @@ const styles = StyleSheet.create({
   gap: {
     marginVertical: 10,
   },
+  descriptionText: {
+    fontWeight: '700',
+  },
   descriptionContainer: {
     borderWidth: 1,
     borderColor: Color.lavander,
     borderRadius: 10,
+    padding: 10,
   },
   scrollView: {
     marginHorizontal: 20,
