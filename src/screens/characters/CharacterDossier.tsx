@@ -33,11 +33,15 @@ export const Dossier = ({navigation, route}: DossierNavigationProps) => {
       foundPerson = characters[index];
       setPerson(foundPerson);
 
-      const tags = foundPerson.tags.current?.map(mapTags);
+      const tags = foundPerson.tags.current?.map(tag =>
+        mapTags(tag, '#593FB5'),
+      );
       if (tags) {
         setTagList(tags);
       }
-      const previoustags = foundPerson.tags.previous?.map(mapTags);
+      const previoustags = foundPerson.tags.previous?.map(tag =>
+        mapTags(tag, '#666666'),
+      );
       if (previoustags) {
         setPreviousTagList(previoustags);
       }
@@ -48,8 +52,8 @@ export const Dossier = ({navigation, route}: DossierNavigationProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personId]);
 
-  const mapTags = (tag: string) => (
-    <TagLink key={tag} navigation={navigation} tag={tag} />
+  const mapTags = (tag: string, textColor: string) => (
+    <TagLink key={tag} tag={tag} style={styles.tag} textColor={textColor} />
   );
 
   const mapRelation = (rel: IRelation, index: number) => (
@@ -72,13 +76,15 @@ export const Dossier = ({navigation, route}: DossierNavigationProps) => {
       ) : (
         <ScrollView style={styles.scrollView}>
           <Text>{person.description}</Text>
-          {person.tags.current && person.tags.current.length > 0 && (
-            <View>{tagList}</View>
-          )}
+          <View style={styles.taglist}>
+            {person.tags.current && person.tags.current.length > 0 && (
+              <View style={styles.tagsRow}>{tagList}</View>
+            )}
 
-          {person.tags.previous && person.tags.previous.length > 0 && (
-            <View>{previousTagList}</View>
-          )}
+            {person.tags.previous && person.tags.previous.length > 0 && (
+              <View style={styles.tagsRow}>{previousTagList}</View>
+            )}
+          </View>
           <View>{relationshipList}</View>
           <Button
             onPress={() => navigation.navigate('Avatar gallery')}
@@ -103,5 +109,17 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     marginHorizontal: 20,
+  },
+  taglist: {
+    backgroundColor: '#cccccc',
+    padding: 10,
+    borderRadius: 10,
+  },
+  tagsRow: {
+    flexDirection: 'row',
+    marginBottom: 5,
+  },
+  tag: {
+    marginEnd: 15,
   },
 });

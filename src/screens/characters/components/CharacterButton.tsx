@@ -17,9 +17,12 @@ interface ButtonProps {
 }
 
 export const CharacterButton = ({personName, personId, style}: ButtonProps) => {
-  const navigation = useNavigation<CharListNavigationProps>();
+  const navigation = useNavigation();
   const onPress = () => {
-    navigation.push('Dossier', {personId: personId});
+    navigation.navigate('Characters', {
+      screen: 'Dossier',
+      params: {personId: personId},
+    });
   };
 
   return (

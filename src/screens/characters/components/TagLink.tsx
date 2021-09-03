@@ -1,33 +1,36 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
-export const TagLink = ({navigation, tag}: any) => {
+interface TagLinkProps {
+  tag: string;
+  style: StyleProp<ViewStyle>;
+  textColor: string;
+}
+
+export const TagLink = ({tag, style, textColor}: TagLinkProps) => {
+  const navigation = useNavigation();
+
   const onPress = () =>
     navigation.navigate('Tag', {screen: 'TagInfo', params: {title: tag}});
 
   return (
-    <View style={styles.container}>
-      <TouchableHighlight onPress={onPress}>
-        <View style={styles.link}>
-          <Text style={styles.text}>{tag}</Text>
-        </View>
-      </TouchableHighlight>
-    </View>
+    <TouchableOpacity onPress={onPress} style={style}>
+      <Text style={[styles.text, {color: textColor}]}>{tag}</Text>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-  },
-  link: {
-    alignItems: 'center',
-    backgroundColor: '#aaaaaa',
-    padding: 10,
-  },
   text: {
     color: '#666666',
+    fontSize: 18,
   },
 });

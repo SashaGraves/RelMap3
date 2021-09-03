@@ -6,7 +6,7 @@ export const characters: IPerson[] = [
     name: 'Frodo',
     avatar: '',
     tags: {
-      current: ['halfling'],
+      current: ['halfling', 'elvish language'],
       previous: ['Shire'],
     },
     relation: [
@@ -72,7 +72,7 @@ export const characters: IPerson[] = [
     name: 'Strider',
     avatar: '',
     tags: {
-      current: ['human'],
+      current: ['human', 'elvish language'],
     },
     relation: [
       {
