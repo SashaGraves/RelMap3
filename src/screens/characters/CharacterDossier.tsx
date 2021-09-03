@@ -13,12 +13,13 @@ import {
 import {characters} from 'data/characters';
 import {IPerson, IRelation} from 'types/Person';
 import {ITag} from 'types/Tag';
+import {DossierNavigationProps} from 'types/Navigation';
 import {Relationship} from './components/Relationship';
 import {TagLink} from './components/TagLink';
 
-export const Dossier = ({navigation, route}: any) => {
-  const {id: personId} = route.params;
-  const [person, setPerson] = useState<IPerson>({} as IPerson);
+export const Dossier = ({navigation, route}: DossierNavigationProps) => {
+  const {personId} = route.params;
+  const [person, setPerson] = useState<IPerson | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [tagList, setTagList] = useState<any[]>();
   const [previousTagList, setPreviousTagList] = useState<any[]>();
@@ -32,19 +33,23 @@ export const Dossier = ({navigation, route}: any) => {
       foundPerson = characters[index];
       setPerson(foundPerson);
 
-      const tags = foundPerson.tags.map(mapTags);
-      setTagList(tags);
-      const previousTags = foundPerson.previousTags?.map(mapTags);
-      setPreviousTagList(previousTags);
-      const relations = foundPerson.relationships.map(mapRelation);
+      const tags = foundPerson.tags.current?.map(mapTags);
+      if (tags) {
+        setTagList(tags);
+      }
+      const previoustags = foundPerson.tags.previous?.map(mapTags);
+      if (previoustags) {
+        setPreviousTagList(previoustags);
+      }
+      const relations = foundPerson.relation.map(mapRelation);
       setRelationshipList(relations);
     }
     setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [personId]);
 
-  const mapTags = (tag: string, index: number) => (
-    <TagLink key={index} navigation={navigation} tag={tag} />
+  const mapTags = (tag: string) => (
+    <TagLink key={tag} navigation={navigation} tag={tag} />
   );
 
   const mapRelation = (rel: IRelation, index: number) => (
@@ -52,22 +57,26 @@ export const Dossier = ({navigation, route}: any) => {
   );
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      title: person.name,
-    });
+    if (person) {
+      navigation.setOptions({
+        title: person.name,
+      });
+    }
   }, [navigation, person]);
-
-  console.log(tagList);
 
   return (
     <View style={styles.view}>
-      {isLoading ? (
-        <Text>Wait fot it...</Text>
+      {isLoading && <Text>Wait fot it...</Text>}
+      {!person ? (
+        <Text>This character is not in library yet. Create dossier? </Text>
       ) : (
         <ScrollView style={styles.scrollView}>
           <Text>{person.description}</Text>
-          <View>{tagList}</View>
-          {person.previousTags && person.previousTags.length > 0 && (
+          {person.tags.current && person.tags.current.length > 0 && (
+            <View>{tagList}</View>
+          )}
+
+          {person.tags.previous && person.tags.previous.length > 0 && (
             <View>{previousTagList}</View>
           )}
           <View>{relationshipList}</View>

@@ -1,33 +1,23 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  Button,
-  View,
-  Settings,
-} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {CharacterButton} from './components/CharacterButton';
 import {characters} from 'data/characters';
 
-export const CharacterList = ({navigation}: any) => (
-  <View style={styles.view}>
-    <ScrollView style={styles.scrollView}>
-      {characters.map(person => (
-        <CharacterButton
-          key={person.id}
-          person={person}
-          navigation={navigation}
-          style={styles.listItem}
-        />
-      ))}
-    </ScrollView>
-  </View>
-);
-
+export const CharacterList = () => {
+  const buttonsList = characters.map(person => (
+    <CharacterButton
+      key={person.id}
+      personName={person.name}
+      personId={person.id}
+      style={styles.listItem}
+    />
+  ));
+  return (
+    <View style={styles.view}>
+      <ScrollView style={styles.scrollView}>{buttonsList}</ScrollView>
+    </View>
+  );
+};
 const styles = StyleSheet.create({
   view: {
     flex: 1,

@@ -1,60 +1,27 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  Button,
-  View,
-  Settings,
-} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useAppSelector} from 'store/store';
-
+import {
+  CharacterStackParamList,
+  TagStackParamList,
+  TabParamList,
+} from 'types/Navigation';
 import {Login} from 'screens/Login';
-import {SplashScreen} from 'screens/SplashScreen';
 import {CharacterList} from 'screens/characters/CharacterList';
 import {TagList} from 'screens/tags/TagList';
 import {TagInfo} from 'screens/tags/TagInfo';
 import {Dossier} from 'screens/characters/CharacterDossier';
+import {
+  Map,
+  Gallery,
+  AppSettings,
+  UserStetings,
+} from 'common/components-in-progress';
 
-const Gallery = () => (
-  <View style={styles.view}>
-    <Text>Here will be avatar gallery</Text>
-  </View>
-);
-
-const Map = () => (
-  <View style={styles.view}>
-    <Text>Here will be Map</Text>
-  </View>
-);
-
-const AppSettings = ({navigation}: any) => (
-  <View style={styles.view}>
-    <Text>Here will be App settings</Text>
-    <Button
-      onPress={() => navigation.push('UserSettings')}
-      title="Go to user settings"
-    />
-  </View>
-);
-
-const UserStetings = ({navigation}: any) => (
-  <View style={styles.view}>
-    <Text>Here will be User settings</Text>
-    <Button
-      onPress={() => navigation.goBack('AppSettings')}
-      title="Go to app settings"
-    />
-  </View>
-);
-
-const CharacterNavigator = createNativeStackNavigator();
+const CharacterNavigator =
+  createNativeStackNavigator<CharacterStackParamList>();
 
 const CharacterStack = () => (
   <CharacterNavigator.Navigator initialRouteName="Character List">
@@ -76,7 +43,7 @@ const CharacterStack = () => (
   </CharacterNavigator.Navigator>
 );
 
-const TagNavigator = createNativeStackNavigator();
+const TagNavigator = createNativeStackNavigator<TagStackParamList>();
 
 const TagStack = () => (
   <TagNavigator.Navigator initialRouteName="TagList">
@@ -122,7 +89,7 @@ const SettingsStack = () => (
   </SettingsNavigator.Navigator>
 );
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<TabParamList>();
 
 const LoginNavigator = createNativeStackNavigator();
 
@@ -145,13 +112,5 @@ const Navigation = () => {
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default Navigation;

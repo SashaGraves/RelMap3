@@ -5,20 +5,30 @@ import {
   TouchableHighlight,
   View,
   TouchableOpacity,
+  ViewStyle,
 } from 'react-native';
+import {CharListNavigationProps} from 'types/Navigation';
+import {useNavigation} from '@react-navigation/native';
 
-export const CharacterButton = ({navigation, person, style}: any) => {
+interface ButtonProps {
+  personName: string;
+  personId: string;
+  style: ViewStyle;
+}
+
+export const CharacterButton = ({personName, personId, style}: ButtonProps) => {
+  const navigation = useNavigation<CharListNavigationProps>();
   const onPress = () => {
-    navigation.push('Dossier', {id: person.id});
+    navigation.push('Dossier', {personId: personId});
   };
 
   return (
     <View style={(styles.container, style)}>
-      <TouchableHighlight onPress={onPress}>
+      <TouchableOpacity onPress={onPress}>
         <View style={styles.button}>
-          <Text>{person.name}</Text>
+          <Text>{personName}</Text>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     </View>
   );
 };
