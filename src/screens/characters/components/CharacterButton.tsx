@@ -13,26 +13,21 @@ import {useNavigation} from '@react-navigation/native';
 interface ButtonProps {
   personName: string;
   personId: string;
-  style: ViewStyle;
+  style?: ViewStyle;
 }
 
 export const CharacterButton = ({personName, personId, style}: ButtonProps) => {
   const navigation = useNavigation();
   const onPress = () => {
-    navigation.navigate('Characters', {
-      screen: 'Dossier',
-      params: {personId: personId},
-    });
+    navigation.push('Dossier', {personId: personId});
   };
 
   return (
-    <View style={(styles.container, style)}>
-      <TouchableOpacity onPress={onPress}>
-        <View style={styles.button}>
-          <Text>{personName}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity onPress={onPress} style={[styles.container, style]}>
+      <View style={styles.button}>
+        <Text>{personName}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 
